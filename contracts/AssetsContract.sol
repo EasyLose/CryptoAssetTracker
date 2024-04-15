@@ -21,10 +21,10 @@ contract DigitalAssetTracker {
     }
 
     function registerAsset(string memory _name) public {
-        assetCounter++;
-        assets[assetCounter] = Asset(assetCounter, _name, msg.sender, block.timestamp);
-        assetHistory[assetCounter].push(msg.sender);
-        emit AssetRegistered(assetCounter, _name, msg.sender);
+        uint256 newAssetId = ++assetCounter;
+        assets[newAssetId] = Asset(newAssetId, _name, msg.sender, block.timestamp);
+        assetHistory[newAssetId].push(msg.sender);
+        emit AssetRegistered(newAssetId, _name, msg.sender);
     }
 
     function transferOwnership(uint256 _assetId, address _newOwner) public onlyOwner(_assetId) {
@@ -36,11 +36,12 @@ contract DigitalAssetTracker {
     }
 
     function getAssetById(uint256 _assetId) public view returns (Asset memory) {
-        require(_assetId <= assetCounter, "Asset does not exist");
+        require(_assetId <= assetCounter && _assetId > 0, "Asset does not exist");
         return assets[_assetId];
     }
 
     function getAssetHistory(uint256 _assetId) public view returns (address[] memory) {
+        require(_assetId <= assetCounter && _assetId > 0, "Asset does not exist");
         return assetHistory[_assetId];
     }
 }
