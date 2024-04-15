@@ -3,9 +3,30 @@ const ethers = require('ethers');
 
 const assetContractABI = [/* ABI JSON here */];
 const assetContractAddress = process.env.CONTRACT_ADDRESS;
-const blockchainProvider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
-const assetManagerWallet = new ethers.Wallet(process.env.PRIVATE_KEY, blockchainProvider);
-const assetContract = new ethers.Contract(assetContractAddress, assetContractABI, assetManagerWallet);
+
+let blockchainProvider;
+try {
+    blockchainProvider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
+} catch (error) {
+    console.error("Failed to connect to the blockchain provider: ", error);
+    process.exit(1); 
+}
+
+let assetManagerWallet;
+try {
+    assetManagerWallet = new ethers.Wallet(process.env.PRIVATE_KEY, blockchainProvider);
+} catch (error) {
+    console.error("Failed to create wallet from private key: ", error);
+    process.exit(1); 
+}
+
+let assetContract;
+try {
+    assetContract = new ethers.Contract(assetContractAddress, assetContractABI, assetManagerWallet);
+} catch (error) {
+    console.error("Failed to initialize contract: ", error);
+    process.exit(1); 
+}
 
 async function createNewAsset(assetId, ownerAddress) {
     try {
