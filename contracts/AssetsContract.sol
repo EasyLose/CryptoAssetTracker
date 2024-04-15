@@ -19,7 +19,7 @@ contract DigitalAssetTracker {
     mapping(uint256 => address[]) private assetHistory;
 
     modifier onlyOwner(uint256 _assetId) {
-        require(assets[_assetId].owner == msg.sender, "Caller is not the asset owner");
+        require(assets[_assetId].owner == msg.sender, "DigitalAssetTracker: Caller is not the asset owner.");
         _;
     }
 
@@ -32,6 +32,7 @@ contract DigitalAssetTracker {
     }
 
     function transferOwnership(uint256 _assetId, address _newOwner) public onlyOwner(_assetId) {
+        require(_newOwner != address(0), "DigitalAssetTracker: New owner address cannot be the zero address.");
         Asset storage asset = assets[_assetId];
         address previousOwner = asset.owner;
         asset.owner = _newOwner;
@@ -41,6 +42,7 @@ contract DigitalAssetTracker {
     }
 
     function updateAssetName(uint256 _assetId, string memory _newName) public onlyOwner(_assetId) {
+        require(bytes(_newName).length > 0, "DigitalAssetTracker: Asset name cannot be empty.");
         Asset storage asset = assets[_assetId];
         string memory oldName = asset.name;
         asset.name = _newName;
@@ -49,12 +51,12 @@ contract DigitalAssetTracker {
     }
     
     function getAssetById(uint256 _assetId) public view returns (Asset memory) {
-        require(_assetId <= assetCounter && _assetId > 0, "Asset does not exist");
+        require(_assetId <= assetCounter && _assetId > 0, "DigitalAssetTracker: Asset does not exist.");
         return assets[_assetId];
     }
 
     function getAssetHistory(uint256 _assetId) public view returns (address[] memory) {
-        require(_assetId <= assetCounter && _assetId > 0, "Asset does not exist");
+        require(_assetId <= assetCounter && _assetId > 0, "DigitalAssetTracker: Asset does not exist.");
         return assetHistory[_assetId];
     }
 }
