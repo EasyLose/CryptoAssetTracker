@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Asset Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header, footer {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+        article {
+            margin-top: 20px;
+        }
+        .form-section, .list-section, .search-section {
+            margin-bottom: 20px;
+        }
+        .form-section input, .search-section input {
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 22px);
+        }
+        .form-section button, .search-section button {
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .list-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .list-section li {
+            padding: 10px;
+            background: #f4f4f4;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Crypto Asset Tracker</h1>
+    </header>
+    <div class="container">
+        <article>
+            <section class="form-section">
+                <h2>Register New Asset</h2>
+                <form id="registerAssetForm">
+                    <input type="text" id="assetName" name="assetName" placeholder="Asset Name" required>
+                    <input type="text" id="assetValue" name="assetValue" placeholder="Asset Value" required>
+                    <button type="submit">Register Asset</button>
+                </form>
+            </section>
+            <section class="form-section">
+                <h2>Transfer Asset Ownership</h2>
+                <form id="transferOwnershipForm">
+                    <input type="text" id="assetId" name="assetId" placeholder="Asset ID" required>
+                    <input type="text" id="newOwner" name="newOwner" placeholder="New Owner's Address" required>
+                    <button type="submit">Transfer Ownership</button>
+                </form>
+            </section>
+            <section class="list-section">
+                <h2>List of Assets</h2>
+                <ul id="assetsList">
+                </ul>
+            </section>
+            <section class="search-section">
+                <h2>Search Asset History</h2>
+                <form id="searchAssetForm">
+                    <input type="text" id="searchAssetId" name="searchAssetId" placeholder="Asset ID" required>
+                    <button type="submit">Search History</button>
+                </form>
+                <div id="searchResults">
+                </div>
+            </section>
+        </article>
+    </div>
+    <footer>
+        <p>Crypto Asset Tracker © 2023</p>
+    </footer>
+    <script>
+    </script>
+</body>
+</html>
