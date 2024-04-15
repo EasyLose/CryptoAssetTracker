@@ -10,6 +10,7 @@ contract DigitalAssetTracker {
 
     event AssetRegistered(uint256 indexed id, string name, address indexed owner);
     event OwnershipTransferred(uint256 indexed id, address indexed from, address indexed to);
+    event AssetNameUpdated(uint256 indexed id, string oldName, string newName);
 
     uint256 private assetCounter;
     mapping(uint256 => Asset) private assets;
@@ -35,6 +36,13 @@ contract DigitalAssetTracker {
         emit OwnershipTransferred(_assetId, previousOwner, _newOwner);
     }
 
+    function updateAssetName(uint256 _assetId, string memory _newName) public onlyOwner(_assetId) {
+        Asset storage asset = assets[_assetId];
+        string memory oldName = asset.name;
+        asset.name = _newName;
+        emit AssetNameUpdated(_assetId, oldName, _newName);
+    }
+    
     function getAssetById(uint256 _assetId) public view returns (Asset memory) {
         require(_assetId <= assetCounter && _assetId > 0, "Asset does not exist");
         return assets[_assetId];
